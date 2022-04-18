@@ -20,12 +20,12 @@ function Header() {
 				<div className="text-white flex items-center text-xs space-x-6 mx-6 whitespace-nowrap">
 					<div className="link">
 						<p>Hello Jack Buscombe</p>
-						<p className="font-extrabold md:text-sm">{"Account & Lists"}</p>
+						<p className="font-extrabold md:text-sm">Account &amp; Lists</p>
 					</div>
 
 					<div className="link">
 						<p>Returns</p>
-						<p className="font-extrabold md:text-sm">{"& Orders"}</p>
+						<p className="font-extrabold md:text-sm">&amp; Orders</p>
 					</div>
 
 					<div className="relative link flex items-center">
@@ -45,11 +45,11 @@ function Header() {
 				<p className="link">Amazon Business</p>
 				<p className="link">Today's Deals</p>
 				<p className="link hidden lg:inline-flex">Electronics</p>
-				<p className="link hidden lg:inline-flex">{"Food & Grocery"}</p>
+				<p className="link hidden lg:inline-flex">Food &amp; Grocery</p>
 				<p className="link hidden lg:inline-flex">Prime</p>
 				<p className="link hidden lg:inline-flex">Buy Again</p>
 				<p className="link hidden lg:inline-flex">Shopper Toolkit</p>
-				<p className="link hidden lg:inline-flex">{"Health & Personal Care"}</p>
+				<p className="link hidden lg:inline-flex">Health &amp; Personal Care</p>
 			</div>
 		</header>
 	);
