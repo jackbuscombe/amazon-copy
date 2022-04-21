@@ -4,12 +4,33 @@ import CheckoutProduct from "../components/CheckoutProduct";
 import Header from "../components/Header";
 import Currency from "react-currency-formatter";
 import { useSession } from "next-auth/react";
-import { useEffect } from "react";
+import axios from "axios";
+import { loadStripe } from "@stripe/stripe-js";
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 
 function Checkout() {
 	const cart = useStore((state) => state.cart);
 	const total = useStore((state) => state.total);
 	const { data: session } = useSession();
+
+	const createCheckoutSession = async () => {
+		const stripe = await stripePromise;
+
+		// Call the backend to create a checkout session
+		const checkoutSession = await axios.post("/api/create-checkout-session", {
+			cart: cart,
+			email: session.user.email,
+		});
+
+		// Redirect customer to Stripe Checkout
+		const result = await stripe.redirectToCheckout({
+			sessionId: checkoutSession.data.id,
+		});
+
+		if (result.error) {
+			alert(result.error.message);
+		}
+	};
 
 	return (
 		<div className="bg-gray-100">
@@ -38,7 +59,7 @@ function Checkout() {
 									<Currency quantity={total} currency="AUD" />
 								</span>
 							</h2>
-							<button disabled={!session} className={`button mt-2 ${!session && "from-gray-300 to-gray-500 border-gray-200 text-gray-300 cursor-not-allowed"}`}>
+							<button role="link" onClick={createCheckoutSession} disabled={!session} className={`button mt-2 ${!session && "from-gray-300 to-gray-500 border-gray-200 text-gray-300 cursor-not-allowed"}`}>
 								{!session ? "Sign in to checkout" : "Proceed to checkout"}
 							</button>
 						</>

@@ -19,7 +19,7 @@ function Header() {
 
 				{/* Search */}
 				<div className="hidden items-center h-10 rounded-md bg-yellow-400 hover:bg-yellow-500 sm:flex flex-grow cursor-pointer">
-					<input className="p-2 h-full w-6 flex-grow flex-shrink rounded-l-md focus:outline-none px-4" type="text" />
+					<input placeholder="Search" className="p-2 h-full w-6 flex-grow flex-shrink rounded-l-md focus:outline-none px-4" type="text" />
 					<SearchIcon className="h-12 p-4" />
 				</div>
 
@@ -30,7 +30,7 @@ function Header() {
 						<p className="font-bold md:text-sm">Account &amp; Lists</p>
 					</div>
 
-					<div className="link">
+					<div className="link" onClick={() => session && router.push("/orders")}>
 						<p>Returns</p>
 						<p className="font-bold md:text-sm">&amp; Orders</p>
 					</div>

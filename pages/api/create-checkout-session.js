@@ -1,0 +1,36 @@
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+
+export default async (req, res) => {
+	const { cart, email } = req.body;
+
+	const transformedCart = cart.map((item) => ({
+		description: item.description,
+		quantity: 1,
+		price_data: {
+			currency: "aud",
+			unit_amount: item.price * 100,
+			product_data: {
+				name: item.title,
+				images: [item.image],
+			},
+		},
+	}));
+
+	const session = await stripe.checkout.sessions.create({
+		payment_method_types: ["card"],
+		shipping_rates: ["shr_1KqUCGAkAPXCyE6UOyCRLbx4"],
+		shipping_address_collection: {
+			allowed_countries: ["US", "CA", "GB", "AU"],
+		},
+		line_items: transformedCart,
+		mode: "payment",
+		success_url: `${process.env.HOST}/success`,
+		cancel_url: `${process.env.HOST}/checkout`,
+		metadata: {
+			email,
+			images: JSON.stringify(cart.map((item) => item.image)),
+		},
+	});
+
+	res.status(200).json({ id: session.id });
+};
