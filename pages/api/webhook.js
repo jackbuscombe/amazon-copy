@@ -1,10 +1,10 @@
 import { buffer } from "micro";
+import { serviceAccount } from "../../permissions";
 const { initializeApp, applicationDefault, cert, getApps, getApp } = require("firebase-admin/app");
 const { getFirestore, Timestamp, FieldValue } = require("firebase-admin/firestore");
 
 // Secure a connection to firebase from the backend
 const admin = require("firebase-admin");
-const serviceAccount = require("../../permissions.json");
 const app = !getApps().length
 	? initializeApp({
 			credential: admin.credential.cert(serviceAccount),
